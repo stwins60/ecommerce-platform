@@ -2,6 +2,7 @@ from flask import Flask, request, render_template, redirect, make_response
 import os
 from dotenv import load_dotenv
 import requests
+from flask_cors import CORS
 
 load_dotenv()
 
@@ -10,6 +11,7 @@ LOGIN_URL = os.getenv('LOGIN_URL')
 PRODUCTS_URL = os.getenv('PRODUCTS_URL')
 
 app = Flask(__name__)
+CORS(app)
 
 # @app.before_request
 # def before_request():
