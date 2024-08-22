@@ -7,7 +7,7 @@ This is a scalable eCommerce platform built using Flask microservices architectu
 The platform is composed of the following microservices:
 1. [Login Microservice](login-microservice/README.md): Handles user registration, authentication, and logout.
 2. [Product Microservice](product-microservice/README.md): Manages product information, including loading, retrieving, adding, updating, and deleting products.
-3. [Frontend Microservice](frontend-microservice/README.md): Provides a web interface for users to interact with the platform.
+3. [Frontend Microservice](frontend/README.md): Provides a web interface for users to interact with the platform.
 
 Each microservice is designed to be independent and can be deployed separately, allowing for scalability and flexibility in managing the platform.
 
