@@ -49,7 +49,7 @@ class Product(db.Model):
     def __repr__(self):
         return f'<Product {self.name}>'
 
-@app.route('/api/v1/products/load_products', methods=['POST'])
+@app.route('/api/v1/product/load_products', methods=['GET'])
 def load_products():
     # Fetch the product data from the external API
     response = requests.get('https://dummyjson.com/products')

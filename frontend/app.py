@@ -18,6 +18,14 @@ CORS(app)
 #     if not request.is_secure:
 #         return redirect(request.url.replace("http://", "https://"))
 
+def load_products():
+    BASE_URL = PRODUCTS_URL
+    response = requests.get(BASE_URL+'/load_products')
+    if response.status_code != 200:
+        return "Failed to fetch product data"
+    return response.json()
+    
+
 @app.route('/', methods=['GET', 'POST'])
 def index():
     products=""
@@ -29,12 +37,16 @@ def index():
         if username == '' or password == '':
             return render_template('index.html', error='Please fill in all the fields')
         
+        
         # Send the data to the login microservice
         response = requests.post(LOGIN_URL, json={'username': username, 'password': password})
+        print(response.text)
         if response.status_code != 200:
             return render_template('index.html', error='An error occurred while logging in')
         if "Login successful" in response.text:
             return redirect('products')
+        else:
+            return render_template('index.html', error='invalid credentials. Please try again')
     return render_template('index.html')
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -47,7 +59,7 @@ def register():
             return render_template('register.html', error='Please fill in all the fields')
         
         # Send the data to the login microservice
-        response = requests.post(LOGIN_URL, json={'username': username, 'password': password})
+        response = requests.post(REGISTER_URL, json={'username': username, 'password': password})
         if response.status_code != 200:
             return render_template('register.html', error='An error occurred while registering')
         
@@ -58,6 +70,7 @@ def register():
 
 @app.route('/products', methods=['GET'])
 def products():
+    load_products()
     product_response = requests.get(PRODUCTS_URL)
     products = product_response.json()['products']
     return make_response(
